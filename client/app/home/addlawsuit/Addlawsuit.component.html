@@ -1,62 +1,197 @@
-<div class="container">
+<div class="container text-right border-b">
+  <h3>
+    معلومات القضية
+  </h3>
   <div class="card-body">
     <div class="row">
-      <div class="form-group col-sm-4">
-        <label for="company">Company</label
-        ><input
-          type="text"
-          id="company"
-          placeholder="Enter your company name"
-          class="form-control"
-        />
+      <div class="form-group col-sm-3">
+        <label for="company">رقم القضية</label><input type="number" id="l_no" placeholder="رقم القضية"
+          class="form-control form-control-sm" />
       </div>
-      <div class="form-group col-sm-4">
-        <label for="vat">VAT</label
-        ><input
-          type="text"
-          id="vat"
-          placeholder="PL1234567890"
-          class="form-control"
-        />
+      <div class="form-group col-sm-3">
+        <label for="vat">سنة القضية</label><input type="number" id="l_year" placeholder="سنة القضية"
+          class="form-control form-control-sm" />
       </div>
-      <div class="form-group col-sm-4">
-        <label for="street">Street</label
-        ><input
-          type="text"
-          id="street"
-          placeholder="Enter street name"
-          class="form-control"
-        />
+      <div class="form-group col-sm-3">
+        <label for="street">المحكمة</label>
+        <select  id="court_name" placeholder="اختر المحكمة"
+          class="form-control form-control-sm" >
+          <option value="" selected>اختر اسم المحكمة</option>
+          <option value="1">1</option>
+          <option value="1">1</option>
+          <option value="1">1</option>
+          <option value="1">1</option>
+          <option value="1">1</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-3">
+        <label for="city">نوع الدعوى</label>
+        <input type="text" id="l_type" placeholder="نوع الدعوى"
+          class="form-control form-control-sm" />
+      </div>
+      <div class="form-group col-sm-3">
+        <label for="city">تاريخ إضافة الدعوى</label><input type="date" id="create_date" placeholder="xxxx/xx/xx"
+          class="form-control form-control-sm" />
+      </div>
+      <div class="form-group col-sm-3">
+        <label for="postal-code">فرد او هية</label>
+        <select id="postal-code"
+          class="form-control form-control-sm" >
+          <option value="" selected>اختر نوع القضية</option>
+          <option value="فرد">فرد</option>
+          <option value="هيئة">هيئة</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-3">
+        <label for="country">قيمي او نوعي</label>
+        <select type="text" id="country" placeholder="Country name"
+          class="form-control form-control-sm">
+         <option value="">اختر نوع القضية</option>
+         <option value="قيمي">قيمي</option>
+         <option value="نوعي">نوعي</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-3">
+        <label for="country">مبلغ الدعوى</label><input type="text" id="country" placeholder="Country name"
+          class="form-control form-control-sm" />
+      </div>
+      <div class="form-group col-sm-3">
+        <label for="country">عدد المدعين</label><input type="text" id="country" placeholder="Country name"
+          class="form-control form-control-sm" />
+      </div>
+      <div class="form-group col-sm-3">
+        <label for="country"> عدد المدعي عليه</label><input type="text" id="country" placeholder="Country name"
+          class="form-control form-control-sm" />
+      </div>
+      <div class="form-group col-sm-3">
+        <label for="country"> عدد الشهود</label><input type="text" id="country" placeholder="Country name"
+          class="form-control form-control-sm" />
+      </div>
+      <div class="form-group col-sm-3">
+        <label for="country"> اسم المحكمة المحال منها</label><input type="text" id="country" placeholder="Country name"
+          class="form-control form-control-sm" />
+      </div>
+      <div class="form-group col-sm-3">
+        <label for="country"> اسم المحكمة المحال اليها</label><input type="text" id="country" placeholder="Country name"
+          class="form-control form-control-sm" />
+      </div>
+      <div class="form-group col-sm-3">
+        <label for="country"> تاريخ الاحالة</label><input type="text" id="country" placeholder="Country name"
+          class="form-control form-control-sm" />
       </div>
     </div>
-    <div class="row">
-      <div class="form-group col-sm-8">
-        <label for="city">City</label
-        ><input
-          type="text"
-          id="city"
-          placeholder="Enter your city"
-          class="form-control"
-        />
-      </div>
-      <div class="form-group col-sm-4">
-        <label for="postal-code">Postal Code</label
-        ><input
-          type="text"
-          id="postal-code"
-          placeholder="Postal Code"
-          class="form-control"
-        />
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="country">Country</label
-      ><input
-        type="text"
-        id="country"
-        placeholder="Country name"
-        class="form-control"
-      />
+    <div class="my-2 text-left">
+      <button class="btn btn-sm btn-outline-primary px-5">حفظ</button>
+      <!-- <button class="btn btn-sm btn-outline-danger">تفريغ</button> -->
     </div>
   </div>
-</div>
+  <hr>
+  <div class="text-right border-b">
+    <h3>
+      جلسات القضة
+    </h3>
+    <div>
+      <div class="card-body">
+        <div class="row">
+          <div class="form-group col-sm-4">
+            <label for="company">Company</label><input type="text" id="company" placeholder="Enter your company name"
+              class="form-control form-control-sm" />
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="vat">VAT</label><input type="text" id="vat" placeholder="PL1234567890"
+              class="form-control form-control-sm" />
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="street">Street</label><input type="text" id="street" placeholder="Enter street name"
+              class="form-control form-control-sm" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-sm-4">
+            <label for="city">City</label><input type="text" id="city" placeholder="Enter your city"
+              class="form-control form-control-sm" />
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="city">City</label><input type="text" id="city" placeholder="Enter your city"
+              class="form-control form-control-sm" />
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="postal-code">Postal Code</label><input type="text" id="postal-code" placeholder="Postal Code"
+              class="form-control form-control-sm" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-sm-4">
+            <label for="country">Country</label><input type="text" id="country" placeholder="Country name"
+              class="form-control form-control-sm" />
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="country">Country</label><input type="text" id="country" placeholder="Country name"
+              class="form-control form-control-sm" />
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="country">Country</label><input type="text" id="country" placeholder="Country name"
+              class="form-control form-control-sm" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="my-2 text-left">
+      <button class="btn btn-sm btn-outline-primary px-5">حفظ</button>
+      <!-- <button class="btn btn-sm btn-outline-danger">تفريغ</button> -->
+    </div>
+  </div>
+  <hr>
+  <div class="text-right border-b">
+    <h3>طلبات القضية</h3>
+    <div>
+      <div class="card-body">
+        <div class="row">
+          <div class="form-group col-sm-4">
+            <label for="company">Company</label><input type="text" id="company" placeholder="Enter your company name"
+              class="form-control form-control-sm" />
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="vat">VAT</label><input type="text" id="vat" placeholder="PL1234567890"
+              class="form-control form-control-sm" />
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="street">Street</label><input type="text" id="street" placeholder="Enter street name"
+              class="form-control form-control-sm" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-sm-4">
+            <label for="city">City</label><input type="text" id="city" placeholder="Enter your city"
+              class="form-control form-control-sm" />
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="city">City</label><input type="text" id="city" placeholder="Enter your city"
+              class="form-control form-control-sm" />
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="postal-code">Postal Code</label><input type="text" id="postal-code" placeholder="Postal Code"
+              class="form-control form-control-sm" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-sm-4">
+            <label for="country">Country</label><input type="text" id="country" placeholder="Country name"
+              class="form-control form-control-sm" />
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="country">Country</label><input type="text" id="country" placeholder="Country name"
+              class="form-control form-control-sm" />
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="country">Country</label><input type="text" id="country" placeholder="Country name"
+              class="form-control form-control-sm" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="my-2 text-left">
+      <button class="btn btn-sm btn-outline-primary px-5">حفظ</button>
+      <!-- <button class="btn btn-sm btn-outline-danger">تفريغ</button> -->
+    </div>
+  </div>

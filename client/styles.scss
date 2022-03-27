@@ -18,3 +18,9 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.border-b{
+  border: 1px solid rgb(191, 244, 253); 
+  border-radius: 10px;
+  padding: 10px;
+}
