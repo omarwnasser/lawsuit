@@ -1,0 +1,9 @@
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+
+.form-control,.form-control-sm{
+  border: none;
+  border-radius: 0;
+  border-bottom: 2px solid lightgray;
+}

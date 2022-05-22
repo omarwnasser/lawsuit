@@ -1,0 +1,44 @@
+<div class="container">
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse row justify-content-between" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a  aria-current="page" routerLink="/" class="nav-link"  [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active">الصفحة الرئسية</a>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="/addlawsuit" class="nav-link" routerLinkActive="active">إضافة ملف</a>
+                </li>
+                <li class="nav-item">
+                  <a  class="nav-link">تقارير</a>
+              </li>
+                <!-- <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/login">Login</a></li>
+                        <li><a class="dropdown-item" href="/register">Register</a></li>
+                    </ul>
+                </li> -->
+            </ul>
+            <div class="dropdown open">
+              <button class="btn btn-link dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">
+                    {{user.username}}
+                  </button>
+              <div class="dropdown-menu" aria-labelledby="triggerId">
+                <button class="dropdown-item" routerLink="/register" *ngIf="user.role == 'admin'">add user</button>
+                <button class="dropdown-item" routerLink="/admin" *ngIf="user.role == 'admin'">admin</button>
+                <button class="dropdown-item" routerLink="/logout">logout</button>
+              </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+  <router-outlet></router-outlet>
+
+</div>

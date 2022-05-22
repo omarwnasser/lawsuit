@@ -1,0 +1,434 @@
+<div class="row justify-content-center w-100">
+  <app-loading [condition]="isLoading"></app-loading>
+</div>
+<app-toast  [message]="toast.message"></app-toast>
+<div *ngIf="!isLoading" class="mt-4" >
+  <div class="container text-right border-b"  *ngIf="!lawsuitInfoData._id || editInfo">
+    <h3>
+      معلومات القضية
+    </h3>
+    <div>
+      <form class="card-body row" [formGroup]="lawsuitInfoForm" (ngSubmit)="addLawsuit()" dir="rtl">
+       <mat-form-field class="col-2 px-3">
+         <input matInput placeholder="رقم القضية"  [formControl]="l_no">
+       </mat-form-field>
+        <mat-form-field class="col-2 px-3">
+          <input matInput  [formControl]="l_year" placeholder="سنة القضية">
+          <input matInput [matDatepicker]="datepicker" hidden >
+          <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+          <mat-datepicker #datepicker
+                  startView="multi-year"
+                  (yearSelected)="setYear($event, datepicker)"
+                  panelClass="example-month-picker">
+          </mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="col-3 px-3">
+          <mat-select placeholder="المحكمة"  [formControl]="court_name">
+            <mat-option *ngFor="let item of dList.court_name" [value]="item.name">
+              {{item.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-5 px-3">
+          <input matInput placeholder="نوع الدعوى"  [formControl]="l_type" [matAutocomplete]="auto">
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let item of filteredOptions | async" [value]="item.name">
+              {{item.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field class="col-3 px-3">
+          <input matInput [matDatepicker]="picker1" [formControl]="l_date" placeholder="تاريخ إيداع الدعوى">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="col-3 px-3">
+          <mat-select placeholder="الهيئة القضائية" [formControl]="l_type_no">
+            <mat-option value="فرد">فرد</mat-option>
+            <mat-option value="هيئة">هيئة</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-3 px-3">
+          <mat-select placeholder="اختصاص الدعوى"  [formControl]="l_type_s">
+            <mat-option value="قيمي">قيمي</mat-option>
+            <mat-option value="نوعي">نوعي</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-2 px-3" *ngIf="l_type_s.value == 'قيمي'">
+          <input matInput type="number" placeholder="قيمة الدعوى"  [formControl]="l_cost">
+        </mat-form-field>
+        <mat-form-field class="col-1 px-3" *ngIf="l_type_s.value == 'قيمي'">
+          <mat-select placeholder="العملة"  [formControl]="l_cost_type">
+            <mat-option value="شيكل">شيكل</mat-option>
+            <mat-option value="دينار">دينار</mat-option>
+            <mat-option value="دولار">دولار</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-3 px-3" *ngIf="l_type_s.value != 'قيمي'">
+          <input matInput type="number" placeholder="قيمة الدعوى"  [disabled]="true">
+        </mat-form-field>
+        <mat-form-field class="col-3 px-3">
+          <input matInput type="number" placeholder="عدد المدعين"  [formControl]="claimant_no">
+        </mat-form-field>
+        <mat-form-field class="col-3 px-3">
+          <input matInput type="number" placeholder="عدد المدعى عليهم"  [formControl]="defendant_no">
+        </mat-form-field>
+        <mat-form-field class="col-3 px-3">
+          <input matInput type="number" placeholder="عدد الشهود"  [formControl]="witness_no">
+        </mat-form-field>
+        <mat-form-field class="col-3 px-3">
+          <mat-select placeholder="المحكمة المحال منها"  [formControl]="court_trans_from">
+            <mat-option *ngFor="let item of dList.court_name" [value]="item.name">
+              {{item.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-3 px-3">
+          <mat-select placeholder="المحكمة المحال اليها"  [formControl]="court_trans_to">
+            <mat-option *ngFor="let item of dList.court_name" [value]="item.name">
+              {{item.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-3 px-3">
+          <input matInput [matDatepicker]="picker2" placeholder="تاريخ الاحالة"
+                 [formControl]="trans_date">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      <div class="my-2 text-left col-12">
+        <button class="btn btn-sm btn-primary px-5" type="submit" *ngIf="!editInfo">حفظ</button>
+        <button class="btn btn-sm btn-primary px-5" type="button" *ngIf="editInfo" (click)="updateLawsuit()">تعديل</button>
+        <button class="btn btn-sm btn-warning px-5" type="button" *ngIf="editInfo" (click)="cancelEditLawsuit()">إلغاء الأمر</button>
+      </div>
+      </form>
+    </div>
+  </div>
+  <div *ngIf="lawsuitInfoData._id && !editInfo">
+    <table class="table table-borderd text-right">
+      <thead>
+        <tr>
+          <th>رقم القضية</th>
+          <th>المحكمة</th>
+          <th>نوع الدعوى</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>{{ lawsuitInfoData.l_no +'/'+ lawsuitInfoData.l_year }}</b></td>
+          <td><b>{{ lawsuitInfoData.court_name }}</b></td>
+          <td><b>{{ lawsuitInfoData.l_type }}</b></td>
+          <td>
+            <button class="btn btn-sm" (click)="editLawsuit()"><mat-icon color="primary">edit</mat-icon></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="lawsuitInfoData._id">
+    <!-- ===================================================================== -->
+    <!-- ===================================================================== -->
+    <!-- ===================================================================== -->
+    <mat-tab-group [disableRipple]="false" [(selectedIndex)]="tabIndex">
+        <mat-tab label=" جلسات القضية">
+          <div class="text-right border-b my-2">
+            <div>
+              <div class="card-body">
+                <form [formGroup]="lawsuitTableForm" class="row" (ngSubmit)="addLawsuitTable()">
+                  <div class="form-group col-sm-3">
+                    <label for="session_no">*رقم التأجيل</label>
+                    <input type="number" id="session_no" placeholder="رقم الجلسة" [formControl]="session_no"
+                      class="form-control form-control-sm" />
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <label for="court_name_table">*المحكمة</label>
+                    <select  id="court_name_table" [formControl]="court_name_table"
+                      class="form-control form-control-sm" >
+                      <option value="" selected disabled>اختر اسم المحكمة</option>
+                      <option *ngFor="let item of dList.court_name" [value]="item.name">{{item.name}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <label for="judge_name">*اسم القاضي</label>
+                    <input type="text" id="judge_name" placeholder="اسم القاضي" [formControl]="judge_name"
+                      class="form-control form-control-sm" />
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <label for="from_date">*من تاريخ</label>
+                    <input type="date" id="from_date" [formControl]="from_date" (change)="postponementPeriod()" [value]="from_date"
+                      class="form-control form-control-sm" />
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <label for="to_date">*إلى تاريخ</label>
+                    <input type="date" id="to_date" [formControl]="to_date" (change)="postponementPeriod()"
+                      class="form-control form-control-sm" />
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <label for="postponement_period">مدة التأجيل</label>
+                    <input type="number" id="postponement_period" placeholder="مدة التأجيل" [formControl]="postponement_period" (change)="postponementPeriod()"
+                      class="form-control form-control-sm" />
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <label for="postponement_period_couse">*سبب التأجيل</label>
+                    <select id="postponement_period_couse" placeholder="سبب التأجيل" [formControl]="postponement_period_couse" (change)="postponementPeriodcouse()"
+                      class="form-control form-control-sm" >
+                        <option value="" selected disabled>سبب التأجيل</option>
+                        <option *ngFor="let item of dList.postponementPeriodList" [value]="item.name">{{item.value}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <label for="reason_details">تفاصيل سبب التاجيل</label>
+                    <input type="text" id="reason_details" [formControl]="reason_details" class="form-control form-control-sm" [matAutocomplete]="auto2"
+                    />
+                    <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
+                      <mat-option *ngFor="let item of postponementPeriodDetail.value" [value]="item.name">
+                        {{item.name}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <label for="session_active">تأجيل بجلسة أو بدون</label>
+                    <mat-radio-group class="form-control form-control-sm" [formControl]="session_active">
+                      <mat-radio-button [value]="true" color="primary">&nbsp;&nbsp; بجلسة</mat-radio-button>
+                      <mat-radio-button [value]="false" color="warn">&nbsp;&nbsp;بدون جلسة </mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <label for="has_lawyer"> يوجد محامي </label>
+                    <mat-radio-group class="form-control form-control-sm" [formControl]="has_lawyer">
+                      <mat-radio-button [value]="true" color="primary">&nbsp;&nbsp; نعم </mat-radio-button>
+                      <mat-radio-button [value]="false" color="warn">&nbsp;&nbsp;لا   </mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <label for="stage">المرحلة</label>
+                    <select type="text" id="stage" placeholder="المرحلة" [formControl]="stage"
+                      class="form-control form-control-sm">
+                        <option selected disabled value="">المرحلة</option>
+                        <option *ngFor="let item of dList.stage" [value]="item.name">{{item.name}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group text-left col-sm-6 mr-auto align-self-end ">
+                    <input class="btn btn-sm btn-primary px-4" type="submit" value="حفظ" [ngClass]="!editId ? '':'d-none'" [disabled]='editId' />
+                    <input class="btn btn-sm btn-outline-primary  px-4" type="button" value="تعديل" [ngClass]="editId ? '':'d-none'" [disabled]='!editId' (click)="editLawTable()">
+                    <input class="btn btn-sm btn-outline-secondary px-4" type="button" value="تفريغ" (click)="resetLawsuitTable()"/>
+                    <!-- <button class="btn btn-sm btn-outline-danger">تفريغ</button> -->
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div>
+              <table class="table table-sm table-striped table-inverse">
+                <thead>
+                  <tr>
+                    <th>رقم الجلسة</th>
+                    <th>اسم المحكمة</th>
+                    <th>اسم القاضي</th>
+                    <th>من تاريخ</th>
+                    <th>إلى تاريخ</th>
+                    <th>مدة التأجيل</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let item of lawsuitTableList;">
+                  <tr>
+                    <td>{{item.session_no}}</td>
+                    <td>{{item.court_name}}</td>
+                    <td>{{item.judge_name}}</td>
+                    <td>{{item.from_date.toString().slice(0,10)}}</td>
+                    <td>{{item.to_date.toString().slice(0,10)}}</td>
+                    <td>{{item.postponement_period}}</td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modelId" (click)="showModal(item)">تفاصيل</button>
+                      <button class="btn btn-sm btn-outline-info" (click)="editLawsuitTable(item._id)">تعديل</button>
+                      <button class="btn btn-sm btn-outline-warning" (click)="deleteLawsuitTable(item._id)">حذف</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </mat-tab>
+    <!-- ===================================================================== -->
+    <!-- ===================================================================== -->
+    <!-- ===================================================================== -->
+        <mat-tab label="طلبات القضية">
+          <div class="text-right border-b my-2">
+            <div>
+              <div class="card-body">
+                <form [formGroup]="requestTableForm" class="row"  (ngSubmit)="addRequestTable()" dir="rtl">
+                  <div class="form-group col-sm-3">
+                    <mat-form-field>
+                      <input matInput placeholder="رقم الطلب" [formControl]="request_no">
+                    </mat-form-field>
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <mat-form-field>
+                      <input matInput  placeholder="سنة الطلب" [formControl]="request_year">
+                      <input matInput [matDatepicker]="picker4" placeholder="سنة الطلب" hidden>
+                      <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                      <mat-datepicker #picker4
+                      startView="multi-year"
+                      (yearSelected)="setYear2($event, picker4)"
+                      ></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <mat-form-field>
+                      <input matInput placeholder="نوع الطلب" [formControl]="request_type">
+                    </mat-form-field>
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <mat-form-field>
+                      <input matInput placeholder="اسم القاضي" [formControl]="judge_name_request">
+                    </mat-form-field>
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <mat-form-field>
+                      <input matInput placeholder="مقدم الطلب" [formControl]="applicant_name">
+                    </mat-form-field>
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <mat-form-field>
+                      <input matInput [matDatepicker]="pickerap1" placeholder="title"  placeholder="تاريخ تقديم الطلب" [formControl]="applicant_date"  (dateChange)="applicantPeriod()">
+                      <mat-datepicker-toggle matSuffix [for]="pickerap1"></mat-datepicker-toggle>
+                      <mat-datepicker #pickerap1></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <mat-form-field>
+                      <input matInput [matDatepicker]="pickerap2" placeholder="title" placeholder="تاريخ فصل الطلب" [formControl]="applicant_do_date" (dateChange)="applicantPeriod()">
+                      <mat-datepicker-toggle matSuffix [for]="pickerap2"></mat-datepicker-toggle>
+                      <mat-datepicker #pickerap2></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <mat-form-field>
+                      <input matInput type="number" placeholder="الفرق بين الطلب وفصله" [formControl]="applicant_do_period" (keyup)="applicantPeriod()">
+                    </mat-form-field>
+                  </div>
+                  <div class="form-group text-left col-sm-6 mr-auto align-self-end ">
+                    <input class="btn btn-sm btn-primary px-4" type="submit" value="حفظ" *ngIf="!editrId"/>
+                    <input class="btn btn-sm btn-primary px-4" type="button" value="تعديل" *ngIf="editrId" (click)="editReqTable()"/>
+                    <input class="btn btn-sm btn-outline-secondary px-4" type="button" value="تفريغ" (click)="resetRequestTable()"/>
+                  </div>
+                </form>
+                <!-- <form [formGroup]="requestTableForm" class="row"  (ngSubmit)="addRequestTable()">
+                  <div class="form-group col-sm-3">
+                    <label for="request_no">*رقم الطلب</label>
+                    <input type="number" id="request_no" placeholder="رقم الطلب" [formControl]="request_no"
+                      class="form-control form-control-sm" />
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <label for="request_year">*سنة الطلب</label>
+                    <input matInput type="number" id="request_year"  [formControl]="request_year"
+                      class="form-control form-control-sm" />
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <label for="request_type">*نوع الطلب</label>
+                    <input type="text" id="request_type" placeholder="نوع الطلب" [formControl]="request_type"
+                      class="form-control form-control-sm" />
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <label for="judge_name">*اسم القاضي</label>
+                    <input type="text" id="judge_name" placeholder="اسم القاضي" [formControl]="judge_name_request"
+                      class="form-control form-control-sm" />
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <label for="applicant_name"> *مقدم الطلب</label>
+                    <select [formControl]="applicant_name" class="form-control form-control-sm">
+                      <option value="المدعي">المدعي</option>
+                      <option value="المدعى عليه">المدعى عليه</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <label for="applicant_date">تاريخ تقديم الطلب</label>
+                    <input type="date" id="applicant_date" placeholder="تاريخ تقديم الطلب" [formControl]="applicant_date" (change)="applicantPeriod()"
+                      class="form-control form-control-sm" />
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <label for="applicant_do_date">تاريخ فصل الطلب</label>
+                    <input type="date" id="applicant_do_date" placeholder="تاريخ فصل الطلب" [formControl]="applicant_do_date" (change)="applicantPeriod()"
+                      class="form-control form-control-sm" />
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <label for="applicant_do_period">الفرق بين الطلب وفصله</label>
+                    <input type="number" id="applicant_do_period" placeholder="الفرق بين الطلب وفصله" [formControl]="applicant_do_period" (change)="applicantPeriod()"
+                      class="form-control form-control-sm" />
+                  </div>
+                  <div class="form-group text-left col-sm-6 mr-auto align-self-end ">
+                    <input class="btn btn-sm btn-primary px-4" type="submit" value="حفظ" *ngIf="!editrId"/>
+                    <input class="btn btn-sm btn-primary px-4" type="button" value="تعديل" *ngIf="editrId" (click)="editReqTable()"/>
+                    <input class="btn btn-sm btn-outline-secondary px-4" type="button" value="تفريغ" (click)="resetRequestTable()"/>
+                  </div>
+                </form> -->
+              </div>
+            </div>
+            <div>
+              <table class="table table-sm table-striped table-inverse">
+                <thead>
+                  <tr>
+                    <th>رقم الطلب</th>
+                    <th>سنة الطلب</th>
+                    <th>اسم القاضي</th>
+                    <th>اسم مقدم الطلب</th>
+                    <th>تاريخ تقديم </th>
+                    <th>تاريخ فصل</th>
+                    <th>فترة</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let item of RequestTableList;">
+                  <tr>
+                    <td>{{item.request_no}}</td>
+                    <td>{{item.request_year}}</td>
+                    <td>{{item.judge_name}}</td>
+                    <td>{{item.applicant_name}}</td>
+                    <td>{{item.applicant_date.toString().slice(0,10)}}</td>
+                    <td>{{item.applicant_do_date.toString().slice(0,10)}}</td>
+                    <td>{{item.applicant_do_period}}</td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-primary" (click)="editRequestTable(item._id)">تعديل</button>
+                      <button class="btn btn-sm btn-outline-warning" (click)="deleteRequestTable(item._id)">حذف</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+
+</div>
+
+
+<div *ngIf="lawsuitModalData&&lawsuitModalData._id"  class="text-right">
+  <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="row px-5 pt-5 justify-content-between" style="border-bottom: 1px solid rgba(128, 128, 128, 0.397);">
+          <h5 class="modal-title">تفاصيل قضية </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+         <div class="row m-2 justify-content-between">
+            <div class="col-3 mx-1 my-2 form-control form-control-sm" >جلسة رقم : {{lawsuitModalData.session_no}}</div>
+            <div class="col-3 mx-1 my-2 form-control form-control-sm" >محكمة : {{lawsuitModalData.court_name}}</div>
+            <div class="col-3 mx-1 my-2 form-control form-control-sm" >اسم القاضي : {{lawsuitModalData.judge_name}}</div>
+            <div class="col-3 mx-1 my-2 form-control form-control-sm" >المرحلة : {{lawsuitModalData.stage}}</div>
+            <div class="col-4 mx-1 my-2 form-control form-control-sm" >من تاريخ : {{lawsuitModalData.from_date.toString().slice(0,10)}}</div>
+            <div class="col-4 mx-1 my-2 form-control form-control-sm" >إلى تاريخ : {{lawsuitModalData.to_date.toString().slice(0,10)}}</div>
+            <div class="col-4 mx-1 my-2 form-control form-control-sm" >الفترة  : {{lawsuitModalData.postponement_period}}</div>
+            <div class="col-5 mx-1 my-2 form-control form-control-sm" > سبب التأجيل  : {{ getPostPoementPeriod(lawsuitModalData.postponement_period_couse)}}</div>
+            <div class="col-7 mx-1 my-2 form-control form-control-sm" >تفاصيل التأجيل  : {{lawsuitModalData.reason_details}}</div>
+         </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
