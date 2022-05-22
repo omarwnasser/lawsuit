@@ -47,5 +47,5 @@ Thumbs.db
 
 # MongoDB
 /data
-
+*.zip
 /.angular
