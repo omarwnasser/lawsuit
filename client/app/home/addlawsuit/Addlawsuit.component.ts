@@ -42,14 +42,17 @@ l_type = new FormControl('',Validators.required);
 l_date = new FormControl('');
 l_type_no = new FormControl('',Validators.required);
 l_type_s = new FormControl('',Validators.required);
-l_cost = new FormControl('');
-l_cost_type = new FormControl('شيكل');
+has_no_coast = new FormControl(false)
+l_cost = new FormControl({value: ''});
+l_cost_type = new FormControl({value:'شيكل'});
 claimant_no = new FormControl(0,[Validators.min(1),Validators.required]);
 defendant_no = new FormControl(0,[Validators.min(1),Validators.required]);
 witness_no = new FormControl(0,[Validators.min(0)]);
 court_trans_from = new FormControl();
 court_trans_to = new FormControl();
 trans_date = new FormControl();
+
+
 
 // ===========================
 
@@ -67,6 +70,9 @@ has_lawyer = new FormControl(false)
 
 lawsuitModalData : LawsuitTable ;
 
+option_name :any[] = this.dList.Judges_names;
+Judges_names : Observable<any[]>;
+
 // ===========================
 
 request_no = new FormControl('',Validators.required)
@@ -77,8 +83,9 @@ applicant_name = new FormControl('', Validators.required)
 applicant_date = new FormControl(formatDate(new Date() , 'yyyy-MM-dd','en'))
 applicant_do_date = new FormControl(formatDate(new Date() , 'yyyy-MM-dd','en'))
 applicant_do_period = new FormControl({value: 0})
+is_applicant = new FormControl(false)
 
-
+Judges_names2 : Observable<any[]>;
 // ===========================
 
 postponementPeriodDetail: BehaviorSubject<{no: number, name: string}[]> = new BehaviorSubject([])
@@ -102,6 +109,9 @@ ngOnInit() {
      this.isLoading = true;
      this.lawInfo.getLawsuitInfoId(e.id).subscribe(elem=>{
        this.lawsuitInfoData = elem;
+       if(!elem["has_no_coast"]){
+         this.has_no_coast.setValue(false)
+       }
      },err=> console.log(err),()=>{
        this.lawTable.getLawsuitTable({lawsuitFile: e.id}).subscribe(element=>{
          this.lawsuitTableList = element;
@@ -121,6 +131,14 @@ ngOnInit() {
     startWith(''),
     map(value => this._filter(value)),
   );
+  this.Judges_names = this.judge_name.valueChanges.pipe(
+    startWith(''),
+    map(value => this._filter2(value)),
+  );
+  this.Judges_names2 = this.judge_name_request.valueChanges.pipe(
+    startWith(''),
+    map(value => this._filter3(value)),
+  );
     this.lawsuitInfoForm = new FormGroup({
       l_no : this.l_no,
       l_year : this.l_year,
@@ -137,6 +155,7 @@ ngOnInit() {
       court_trans_from : this.court_trans_from,
       court_trans_to : this.court_trans_to,
       trans_date : this.trans_date,
+      has_no_coast: this.has_no_coast
     });
     this.lawsuitTableForm = new FormGroup({
       session_no : this.session_no,
@@ -161,6 +180,7 @@ ngOnInit() {
       applicant_date : this.applicant_date,
       applicant_do_date : this.applicant_do_date,
       applicant_do_period : this.applicant_do_period,
+      is_applicant  : this.is_applicant,
     })
 
 }
@@ -199,6 +219,11 @@ editLawsuit(){
   delete data._id;
   delete data['__v'];
   delete data.user;
+  if(!data.has_no_coast) data['has_no_coast'] = false;
+  if(data.has_no_coast){
+    this.l_cost.disable();
+    this.l_cost_type.disable();
+  }
   if(!data.l_cost_type){
     data['l_cost_type'] = 'شيكل'
   }
@@ -209,7 +234,7 @@ editLawsuit(){
 
 updateLawsuit(){
   this.isLoading = true;
-  if(this.l_type_s.value == 'نوعي'){
+  if(this.has_no_coast){
     this.l_cost.setValue(0)
   }
   this.lawInfo.updateLawsuitInfo(this.editInfo, this.lawsuitInfoForm.value).subscribe(e=>{
@@ -251,6 +276,7 @@ addLawsuitTable(){
 
 addRequestTable(){
   this.isLoading = true;
+  if(this.is_applicant) this.applicant_do_date.reset()
   if(this.requestTableForm.valid){
     this.reqTable.setRequestTable({...this.requestTableForm.value, lawsuitFile: this.lawsuitInfoData._id }).subscribe(e=>{
       this.isLoading = false;
@@ -285,11 +311,13 @@ editLawTable(){
 }
 
 deleteLawsuitTable(id){
-  this.lawTable.deleteLawsuitTable(id).subscribe()
-  this.lawsuitTableList = [];
-  this.lawTable.getLawsuitTable({lawsuitFile: this.lawsuitInfoData._id}).subscribe(elem=>{
-    this.lawsuitTableList = elem;
-  })
+  if(confirm('هل انت متأكد من الحذف')){
+    this.lawTable.deleteLawsuitTable(id).subscribe()
+    this.lawsuitTableList = [];
+    this.lawTable.getLawsuitTable({lawsuitFile: this.lawsuitInfoData._id}).subscribe(elem=>{
+      this.lawsuitTableList = elem;
+    })
+  }
 }
 
 editRequestTable(id:String){
@@ -299,6 +327,7 @@ editRequestTable(id:String){
   delete data._id;
   delete data.lawsuitFile;
   delete data['__v'];
+  if(!data['is_applicant']) data['is_applicant'] = false;
   if(!data['applicant_do_period']){
     data['applicant_do_period'] = 0;
   }
@@ -310,6 +339,9 @@ editRequestTable(id:String){
 }
 
 editReqTable(){
+  if(this.is_applicant){
+    this.applicant_do_date.reset();
+  }
   this.reqTable.updateRequestTable(this.editrId,this.requestTableForm.value).subscribe(e=>{
     this.RequestTableList[ this.RequestTableList.findIndex(e=> e._id == this.editrId)] = e;
     this.editrId = '';
@@ -318,10 +350,12 @@ editReqTable(){
 }
 
 deleteRequestTable(id){
-  this.reqTable.deleteRequestTable(id).subscribe()
-  this.reqTable.getRequestTable({lawsuitFile: this.lawsuitInfoData._id}).subscribe(elem=>{
-    this.RequestTableList = elem;
-  })
+  if(confirm('هل انت متأكد من الحذف')){
+    this.reqTable.deleteRequestTable(id).subscribe()
+    this.reqTable.getRequestTable({lawsuitFile: this.lawsuitInfoData._id}).subscribe(elem=>{
+      this.RequestTableList = elem;
+    })
+  }
 }
 
 resetLawsuitInfo(){
@@ -340,6 +374,7 @@ resetLawsuitInfo(){
   this.court_trans_from.reset()
   this.court_trans_to.reset()
   this.trans_date.reset()
+  this.has_no_coast.reset(false)
 }
 
 resetLawsuitTable(){
@@ -410,6 +445,18 @@ private _filter(value: string): any[] {
   return this.options.filter(option => option.name.includes(filterValue));
 }
 
+private _filter2(value: string): any[] {
+  const filterValue = value;
+
+  return this.option_name.filter(option => option.name.includes(filterValue));
+}
+
+private _filter3(value: string): any[] {
+  const filterValue = value;
+
+  return this.option_name.filter(option => option.name.includes(filterValue));
+}
+
 setYear(event , db: MatDatepicker<Number>): number{
    let d = new Date(event);
    this.l_year.setValue( d.getFullYear() );
@@ -451,6 +498,21 @@ YearFilter(){
       this.l_year.setValue(0)
     }
 
+  }
+
+  hasCostChange(){
+    if(this.has_no_coast.value){
+      this.l_cost.disable();
+      this.l_cost_type.disable();
+    }else{
+      this.l_cost.enable();
+      this.l_cost_type.enable();
+    }
+  }
+
+  isApplicant(){
+    this.is_applicant.value ? this.applicant_do_date.disable()  :  this.applicant_do_date.enable();
+    this.is_applicant.value ? this.applicant_do_date.reset() :  null;
   }
 
 }

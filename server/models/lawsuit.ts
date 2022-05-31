@@ -17,7 +17,8 @@ const lawsuitInfoSchema = new Schema({
   court_trans_from: String, // اسم المحكمة المحال منها
   court_trans_to : String, // اسم المحكمة المحال إليها
   trans_date: Date, // تاريخ التحمويل
-  user: {type:  Schema.Types.ObjectId , ref: 'User'}
+  user: {type:  Schema.Types.ObjectId , ref: 'User'},
+  has_no_coast: Boolean, // لا يحتوي قيمة في حال انه صحيح يجب تفريغ القيمة القديمة
 })
 
 export const LawsuitInfo =  model('lawsuitInfo', lawsuitInfoSchema);
@@ -48,7 +49,8 @@ const RequestTableSchema = new Schema({
   applicant_name : String, // اسم مقدم الطلب
   applicant_date: Date, // تاريخ تقديم الطلب
   applicant_do_date: Date, // تاريخ فصل الطلب
-  applicant_do_period: Number // الفترة بين الطلب وفصله
+  applicant_do_period: Number, // الفترة بين الطلب وفصله
+  is_applicant: Boolean,
 })
 
 export const RequestTable = model('requestTable', RequestTableSchema);

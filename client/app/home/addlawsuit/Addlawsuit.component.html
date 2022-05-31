@@ -42,30 +42,30 @@
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
-        <mat-form-field class="col-3 px-3">
+        <mat-form-field class="col-2 px-3">
           <mat-select placeholder="الهيئة القضائية" [formControl]="l_type_no">
             <mat-option value="فرد">فرد</mat-option>
             <mat-option value="هيئة">هيئة</mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field class="col-3 px-3">
+        <mat-form-field class="col-2 px-3">
           <mat-select placeholder="اختصاص الدعوى"  [formControl]="l_type_s">
             <mat-option value="قيمي">قيمي</mat-option>
             <mat-option value="نوعي">نوعي</mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field class="col-2 px-3" *ngIf="l_type_s.value == 'قيمي'">
+        <section class="col-2 px-3 checkbox">
+          <mat-checkbox [formControl]="has_no_coast" color="primary" (change)="hasCostChange()">غير مقيد بقيمة</mat-checkbox>
+        </section>
+        <mat-form-field class="col-2 px-3">
           <input matInput type="number" placeholder="قيمة الدعوى"  [formControl]="l_cost">
         </mat-form-field>
-        <mat-form-field class="col-1 px-3" *ngIf="l_type_s.value == 'قيمي'">
+        <mat-form-field class="col-1 px-3">
           <mat-select placeholder="العملة"  [formControl]="l_cost_type">
             <mat-option value="شيكل">شيكل</mat-option>
             <mat-option value="دينار">دينار</mat-option>
             <mat-option value="دولار">دولار</mat-option>
           </mat-select>
-        </mat-form-field>
-        <mat-form-field class="col-3 px-3" *ngIf="l_type_s.value != 'قيمي'">
-          <input matInput type="number" placeholder="قيمة الدعوى"  [disabled]="true">
         </mat-form-field>
         <mat-form-field class="col-3 px-3">
           <input matInput type="number" placeholder="عدد المدعين"  [formControl]="claimant_no">
@@ -78,6 +78,7 @@
         </mat-form-field>
         <mat-form-field class="col-3 px-3">
           <mat-select placeholder="المحكمة المحال منها"  [formControl]="court_trans_from">
+            <mat-option value="-">فارغ</mat-option>
             <mat-option *ngFor="let item of dList.court_name" [value]="item.name">
               {{item.name}}
             </mat-option>
@@ -85,6 +86,7 @@
         </mat-form-field>
         <mat-form-field class="col-3 px-3">
           <mat-select placeholder="المحكمة المحال اليها"  [formControl]="court_trans_to">
+            <mat-option value="-">فارغ</mat-option>
             <mat-option *ngFor="let item of dList.court_name" [value]="item.name">
               {{item.name}}
             </mat-option>
@@ -151,8 +153,13 @@
                   </div>
                   <div class="form-group col-sm-3">
                     <label for="judge_name">*اسم القاضي</label>
-                    <input type="text" id="judge_name" placeholder="اسم القاضي" [formControl]="judge_name"
+                    <input type="text" id="judge_name" placeholder="اسم القاضي" [formControl]="judge_name" [matAutocomplete]="ju"
                       class="form-control form-control-sm" />
+                      <mat-autocomplete autoActiveFirstOption #ju="matAutocomplete">
+                        <mat-option *ngFor="let item of Judges_names | async" [value]="item.name">
+                          {{item.name}}
+                        </mat-option>
+                      </mat-autocomplete>
                   </div>
                   <div class="form-group col-sm-3">
                     <label for="from_date">*من تاريخ</label>
@@ -195,7 +202,7 @@
                     </mat-radio-group>
                   </div>
                   <div class="form-group col-sm-3">
-                    <label for="has_lawyer"> يوجد محامي </label>
+                    <label for="has_lawyer"> توكيل محامي </label>
                     <mat-radio-group class="form-control form-control-sm" [formControl]="has_lawyer">
                       <mat-radio-button [value]="true" color="primary">&nbsp;&nbsp; نعم </mat-radio-button>
                       <mat-radio-button [value]="false" color="warn">&nbsp;&nbsp;لا   </mat-radio-button>
@@ -281,24 +288,36 @@
                   </div>
                   <div class="form-group col-sm-3">
                     <mat-form-field>
-                      <input matInput placeholder="اسم القاضي" [formControl]="judge_name_request">
+                      <input matInput placeholder="اسم القاضي" [formControl]="judge_name_request" [matAutocomplete]="ju2">
+                      <mat-autocomplete autoActiveFirstOption #ju2="matAutocomplete">
+                        <mat-option *ngFor="let item of Judges_names2 | async" [value]="item.name">
+                          {{item.name}}
+                        </mat-option>
+                      </mat-autocomplete>
                     </mat-form-field>
                   </div>
                   <div class="form-group col-sm-3">
                     <mat-form-field>
-                      <input matInput placeholder="مقدم الطلب" [formControl]="applicant_name">
+                      <mat-select placeholder="مقدم الطلب" [formControl]="applicant_name">
+                        <mat-option value="المدعي">المدعي</mat-option>
+                        <mat-option value="المدعى عليه">المدعى عليه</mat-option>
+                        <mat-option value="طرف ثالث">طرف ثالث</mat-option>
+                      </mat-select>
                     </mat-form-field>
                   </div>
                   <div class="form-group col-sm-3">
                     <mat-form-field>
-                      <input matInput [matDatepicker]="pickerap1" placeholder="title"  placeholder="تاريخ تقديم الطلب" [formControl]="applicant_date"  (dateChange)="applicantPeriod()">
+                      <input matInput [matDatepicker]="pickerap1"  placeholder="تاريخ تقديم الطلب" [formControl]="applicant_date"  (dateChange)="applicantPeriod()">
                       <mat-datepicker-toggle matSuffix [for]="pickerap1"></mat-datepicker-toggle>
                       <mat-datepicker #pickerap1></mat-datepicker>
                     </mat-form-field>
                   </div>
+                  <div class="form-group col-sm-3 checkbox">
+                    <mat-checkbox [formControl]="is_applicant" (change)="isApplicant()">هل تم الفصل</mat-checkbox>
+                  </div>
                   <div class="form-group col-sm-3">
                     <mat-form-field>
-                      <input matInput [matDatepicker]="pickerap2" placeholder="title" placeholder="تاريخ فصل الطلب" [formControl]="applicant_do_date" (dateChange)="applicantPeriod()">
+                      <input matInput [matDatepicker]="pickerap2" placeholder="تاريخ فصل الطلب" [formControl]="applicant_do_date" (dateChange)="applicantPeriod()">
                       <mat-datepicker-toggle matSuffix [for]="pickerap2"></mat-datepicker-toggle>
                       <mat-datepicker #pickerap2></mat-datepicker>
                     </mat-form-field>
@@ -314,55 +333,6 @@
                     <input class="btn btn-sm btn-outline-secondary px-4" type="button" value="تفريغ" (click)="resetRequestTable()"/>
                   </div>
                 </form>
-                <!-- <form [formGroup]="requestTableForm" class="row"  (ngSubmit)="addRequestTable()">
-                  <div class="form-group col-sm-3">
-                    <label for="request_no">*رقم الطلب</label>
-                    <input type="number" id="request_no" placeholder="رقم الطلب" [formControl]="request_no"
-                      class="form-control form-control-sm" />
-                  </div>
-                  <div class="form-group col-sm-3">
-                    <label for="request_year">*سنة الطلب</label>
-                    <input matInput type="number" id="request_year"  [formControl]="request_year"
-                      class="form-control form-control-sm" />
-                  </div>
-                  <div class="form-group col-sm-3">
-                    <label for="request_type">*نوع الطلب</label>
-                    <input type="text" id="request_type" placeholder="نوع الطلب" [formControl]="request_type"
-                      class="form-control form-control-sm" />
-                  </div>
-                  <div class="form-group col-sm-3">
-                    <label for="judge_name">*اسم القاضي</label>
-                    <input type="text" id="judge_name" placeholder="اسم القاضي" [formControl]="judge_name_request"
-                      class="form-control form-control-sm" />
-                  </div>
-                  <div class="form-group col-sm-3">
-                    <label for="applicant_name"> *مقدم الطلب</label>
-                    <select [formControl]="applicant_name" class="form-control form-control-sm">
-                      <option value="المدعي">المدعي</option>
-                      <option value="المدعى عليه">المدعى عليه</option>
-                    </select>
-                  </div>
-                  <div class="form-group col-sm-3">
-                    <label for="applicant_date">تاريخ تقديم الطلب</label>
-                    <input type="date" id="applicant_date" placeholder="تاريخ تقديم الطلب" [formControl]="applicant_date" (change)="applicantPeriod()"
-                      class="form-control form-control-sm" />
-                  </div>
-                  <div class="form-group col-sm-3">
-                    <label for="applicant_do_date">تاريخ فصل الطلب</label>
-                    <input type="date" id="applicant_do_date" placeholder="تاريخ فصل الطلب" [formControl]="applicant_do_date" (change)="applicantPeriod()"
-                      class="form-control form-control-sm" />
-                  </div>
-                  <div class="form-group col-sm-3">
-                    <label for="applicant_do_period">الفرق بين الطلب وفصله</label>
-                    <input type="number" id="applicant_do_period" placeholder="الفرق بين الطلب وفصله" [formControl]="applicant_do_period" (change)="applicantPeriod()"
-                      class="form-control form-control-sm" />
-                  </div>
-                  <div class="form-group text-left col-sm-6 mr-auto align-self-end ">
-                    <input class="btn btn-sm btn-primary px-4" type="submit" value="حفظ" *ngIf="!editrId"/>
-                    <input class="btn btn-sm btn-primary px-4" type="button" value="تعديل" *ngIf="editrId" (click)="editReqTable()"/>
-                    <input class="btn btn-sm btn-outline-secondary px-4" type="button" value="تفريغ" (click)="resetRequestTable()"/>
-                  </div>
-                </form> -->
               </div>
             </div>
             <div>

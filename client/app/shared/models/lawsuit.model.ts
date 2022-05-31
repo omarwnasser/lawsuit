@@ -19,6 +19,7 @@ export class Lawsuit{
     court_trans_to ?: String; // اسم المحكمة المحال إليها
     trans_date?: Date; // تاريخ التحمويل
     user?: any;
+    has_no_coast?: Boolean;
 }
 
 export class LawsuitTable{
@@ -47,5 +48,6 @@ export class RequestTable{
     applicant_name ?: String; // اسم مقدم الطلب
     applicant_date?: Date; // تاريخ تقديم الطلب
     applicant_do_date?: Date; // تاريخ فصل الطلب
-    applicant_do_period?: Number // الفترة بين الطلب وفصله
+    applicant_do_period?: Number; // الفترة بين الطلب وفصله
+    is_applicant?: Boolean
 }
