@@ -51,6 +51,7 @@ const RequestTableSchema = new Schema({
   applicant_do_date: Date, // تاريخ فصل الطلب
   applicant_do_period: Number, // الفترة بين الطلب وفصله
   is_applicant: Boolean,
+  applicant_count: Number,
 })
 
 export const RequestTable = model('requestTable', RequestTableSchema);

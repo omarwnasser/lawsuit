@@ -84,6 +84,7 @@ applicant_date = new FormControl(formatDate(new Date() , 'yyyy-MM-dd','en'))
 applicant_do_date = new FormControl(formatDate(new Date() , 'yyyy-MM-dd','en'))
 applicant_do_period = new FormControl({value: 0})
 is_applicant = new FormControl(false)
+applicant_count = new FormControl(0)
 
 Judges_names2 : Observable<any[]>;
 // ===========================
@@ -181,6 +182,8 @@ ngOnInit() {
       applicant_do_date : this.applicant_do_date,
       applicant_do_period : this.applicant_do_period,
       is_applicant  : this.is_applicant,
+      applicant_count : this.applicant_count,
+
     })
 
 }
@@ -276,7 +279,7 @@ addLawsuitTable(){
 
 addRequestTable(){
   this.isLoading = true;
-  if(this.is_applicant) this.applicant_do_date.reset()
+  if(this.is_applicant) this.applicant_do_date.setValue(formatDate(this.applicant_do_date.value , 'yyyy-MM-dd','en'))
   if(this.requestTableForm.valid){
     this.reqTable.setRequestTable({...this.requestTableForm.value, lawsuitFile: this.lawsuitInfoData._id }).subscribe(e=>{
       this.isLoading = false;
@@ -328,6 +331,8 @@ editRequestTable(id:String){
   delete data.lawsuitFile;
   delete data['__v'];
   if(!data['is_applicant']) data['is_applicant'] = false;
+  if(!data['applicant_count']) data['applicant_count'] = 0;
+  if(!data['applicant_do_date']) data['applicant_do_date'] = data['applicant_date'];
   if(!data['applicant_do_period']){
     data['applicant_do_period'] = 0;
   }
@@ -340,7 +345,7 @@ editRequestTable(id:String){
 
 editReqTable(){
   if(this.is_applicant){
-    this.applicant_do_date.reset();
+    this.applicant_do_date.setValue(formatDate(this.applicant_date.value , 'yyyy-MM-dd','en'));
   }
   this.reqTable.updateRequestTable(this.editrId,this.requestTableForm.value).subscribe(e=>{
     this.RequestTableList[ this.RequestTableList.findIndex(e=> e._id == this.editrId)] = e;
@@ -402,6 +407,8 @@ resetRequestTable(){
   this.applicant_do_date.reset();
   this.applicant_do_period.reset();
   this.editrId = '';
+  this.applicant_count.reset();
+  this.is_applicant.reset();
 
 }
 

@@ -49,5 +49,6 @@ export class RequestTable{
     applicant_date?: Date; // تاريخ تقديم الطلب
     applicant_do_date?: Date; // تاريخ فصل الطلب
     applicant_do_period?: Number; // الفترة بين الطلب وفصله
-    is_applicant?: Boolean
+    is_applicant?: Boolean; // هل تم الفصل في الطلب ام لا
+    applicant_count?: Number; // عدد الجلسات التي تم فصل الطلب فيها
 }

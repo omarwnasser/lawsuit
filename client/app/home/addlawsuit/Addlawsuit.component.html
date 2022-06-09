@@ -313,7 +313,7 @@
                     </mat-form-field>
                   </div>
                   <div class="form-group col-sm-3 checkbox">
-                    <mat-checkbox [formControl]="is_applicant" (change)="isApplicant()">هل تم الفصل</mat-checkbox>
+                    <mat-checkbox [formControl]="is_applicant" (change)="isApplicant()">لم يتم فصل الطلب</mat-checkbox>
                   </div>
                   <div class="form-group col-sm-3">
                     <mat-form-field>
@@ -325,6 +325,11 @@
                   <div class="form-group col-sm-3">
                     <mat-form-field>
                       <input matInput type="number" placeholder="الفرق بين الطلب وفصله" [formControl]="applicant_do_period" (keyup)="applicantPeriod()">
+                    </mat-form-field>
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <mat-form-field>
+                      <input matInput type="number" placeholder="عدد الجلسات لفصل الطلب" [formControl]="applicant_count">
                     </mat-form-field>
                   </div>
                   <div class="form-group text-left col-sm-6 mr-auto align-self-end ">
@@ -356,7 +361,7 @@
                     <td>{{item.judge_name}}</td>
                     <td>{{item.applicant_name}}</td>
                     <td>{{item.applicant_date.toString().slice(0,10)}}</td>
-                    <td>{{item.applicant_do_date.toString().slice(0,10)}}</td>
+                    <td>{{item.applicant_do_date ? item.applicant_do_date.toString().slice(0,10) : item.applicant_date.toString().slice(0,10)}}</td>
                     <td>{{item.applicant_do_period}}</td>
                     <td>
                       <button class="btn btn-sm btn-outline-primary" (click)="editRequestTable(item._id)">تعديل</button>
