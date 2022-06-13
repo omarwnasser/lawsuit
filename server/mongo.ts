@@ -8,7 +8,7 @@ async function setMongo(): Promise<any> {
     mongodbURI = process.env.MONGODB_URI;
   }
   // Connect to MongoDB using Mongoose
-  await mongoose.connect(mongodbURI);
+  await mongoose.connect(mongodbURI,{family: 4});
   console.log('Connected to MongoDB');
 }
 
