@@ -5,7 +5,7 @@ import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatButtonModule } from "@angular/material/button";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatCheckboxModule } from "@angular/material/checkbox";
-import { MatNativeDateModule, MatRippleModule } from "@angular/material/core";
+import { MatNativeDateModule, MatRippleModule} from "@angular/material/core";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
@@ -20,7 +20,6 @@ import { SharedModule } from "../shared/shared.module";
 import { AddlawsuitComponent } from "./addlawsuit/Addlawsuit.component";
 import { HomeComponent } from "./home.component";
 import { LawsutitTableComponent } from "./lawsuittable/lawsuittable.component";
-
 
 
 @NgModule({
@@ -53,7 +52,7 @@ import { LawsutitTableComponent } from "./lawsuittable/lawsuittable.component";
   providers: [
     LawsuitService,
     LawsuitTableService,
-    RequestTableService
+    RequestTableService,
   ]
 })
 

@@ -25,7 +25,9 @@ constructor(
   private lawTable: LawsuitTableService,
   private reqTable: RequestTableService,
   public toast : ToastComponent,
-  private route: ActivatedRoute){}
+  private route: ActivatedRoute){
+    
+  }
 
 lawsuitInfoData: Lawsuit = {};
 lawsuitTableList: LawsuitTable[] = [];
@@ -39,7 +41,7 @@ l_no = new FormControl('',[Validators.required,Validators.min(1)]);
 l_year = new FormControl('',[Validators.min(1970),Validators.max(2050),Validators.required]);
 court_name = new FormControl('',Validators.required);
 l_type = new FormControl('',Validators.required);
-l_date = new FormControl('');
+l_date = new FormControl('',Validators.required);
 l_type_no = new FormControl('',Validators.required);
 l_type_s = new FormControl('',Validators.required);
 has_no_coast = new FormControl(false)

@@ -210,11 +210,13 @@
                   </div>
                   <div class="form-group col-sm-3">
                     <label for="stage">المرحلة</label>
-                    <select type="text" id="stage" placeholder="المرحلة" [formControl]="stage"
-                      class="form-control form-control-sm">
-                        <option selected disabled value="">المرحلة</option>
-                        <option *ngFor="let item of dList.stage" [value]="item.name">{{item.name}}</option>
-                    </select>
+                    <input type="text" id="stage"  [formControl]="stage" class="form-control form-control-sm" [matAutocomplete]="autostage"
+                    />
+                    <mat-autocomplete autoActiveFirstOption #autostage="matAutocomplete">
+                      <mat-option *ngFor="let item of dList.stage" [value]="item.name">
+                        {{item.name}}
+                      </mat-option>
+                    </mat-autocomplete>
                   </div>
                   <div class="form-group text-left col-sm-6 mr-auto align-self-end ">
                     <input class="btn btn-sm btn-primary px-4" type="submit" value="حفظ" [ngClass]="!editId ? '':'d-none'" [disabled]='editId' />
