@@ -11,7 +11,7 @@
           <th class="px-2 py-2">المحكمة</th>
           <th class="px-2 py-2">نوع الدعوى</th>
           <th class="px-2 py-2">تاريخ ايداع الدعوى</th>
-          <th *ngIf="user.role == 'admin'" class="px-2 py-2">المستخدم</th>
+          <th class="px-2 py-2">المستخدم</th>
           <th class="px-2 py-2">تعديل</th>
         </tr>
       </thead>
@@ -20,8 +20,8 @@
           <td class="py-2">{{item.l_year +'/' +  item.l_no}}</td>
           <td>{{item.court_name}}</td>
           <td>{{item.l_type}}</td>
-          <td>{{item.l_date.toString().slice(0,10)}}</td>
-          <td *ngIf="user.role == 'admin'">{{item.user['username']}}</td>
+          <td>{{item.l_date? item.l_date.toString().slice(0,10): 'لا ويوجد تاريخ'}}</td>
+          <td>{{item.user['username']}}</td>
           <td>
             <a class="btn btn-sm btn-outline-primary" [routerLink]="['addlawsuit' , item._id]">تحديث</a>
           </td>

@@ -4,7 +4,8 @@ import { Document, model, Schema} from 'mongoose';
 const userSchema = new Schema<IUser>({
   username: {type: String , unique: true },
   password: String,
-  role: String
+  role: String,
+  permissions: [String],
 });
 
 // Before saving the user, hash the password
@@ -41,6 +42,7 @@ export interface IUser extends Document {
   username: string;
   password: string;
   role: string;
+  permissions: String[];
   isModified(password: string): boolean;
 }
 

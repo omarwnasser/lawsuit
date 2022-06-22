@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Lawsuit } from "../../shared/models/lawsuit.model";
 import { LawsuitService } from "../../services/lawsuit.service";
-import { NumberInput } from "@angular/cdk/coercion";
 import { AuthService } from "../../services/auth.service";
 
 
@@ -16,11 +15,11 @@ export class LawsutitTableComponent implements OnInit{
   lawsuitLength: Number = 0;
   pageSize = 25;
   pageSizeOptions: number[] = [2, 5, 10, 25, 100];
-  user: any
+  user = this.auth.currentUser;
+  permissions = this.auth.permissions;
 
-  constructor(private lawsuitInfo: LawsuitService , private auth: AuthService){
-    this.user = auth.currentUser
-  }
+
+  constructor(private lawsuitInfo: LawsuitService , private auth: AuthService){}
 
   ngOnInit(): void {
     this.getLawsuitInfoList(this.pageSize,1);

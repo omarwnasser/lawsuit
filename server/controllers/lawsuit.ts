@@ -39,8 +39,11 @@ export class LawsuitInfoCtrl extends BaseCtrl {
         const docs = await this.model.find({}).populate("user",'username').skip((Number(req.params.page) - 1) * Number(req.params.limit)).limit(Number(req.params.limit));
         res.status(200).json(docs);
 
+      }else if(req.session.user.permissions.length &&( req.session.user.permissions.includes('la')|| req.session.user.permissions.includes('lb'))){
+        const docs = await this.model.find({court_name: req.session.user.permissions.includes('la')? /بداية/ : /صلح/}).populate("user",'username').skip((Number(req.params.page) - 1) * Number(req.params.limit)).limit(Number(req.params.limit));
+        res.status(200).json(docs);
       }else{
-        const docs = await this.model.find({user: req.session.user._id}).skip((Number(req.params.page) - 1) * Number(req.params.limit)).limit(Number(req.params.limit));
+        const docs = await this.model.find({user: req.session.user._id}).populate("user",'username').skip((Number(req.params.page) - 1) * Number(req.params.limit)).limit(Number(req.params.limit));
         res.status(200).json(docs);
       }
     } catch (err) {

@@ -11,6 +11,7 @@ import { User } from '../shared/models/user.model';
 export class AuthService {
   loggedIn = false;
   isAdmin = false;
+  permissions = [];
 
   currentUser: User = new User();
 
@@ -56,6 +57,7 @@ export class AuthService {
     this.currentUser.username = decodedUser.username;
     this.currentUser.role = decodedUser.role;
     this.isAdmin = decodedUser.role === 'admin';
+    this.permissions = decodedUser.permissions? decodedUser.permissions : [];
     delete decodedUser.role;
   }
 
