@@ -19,6 +19,9 @@ function LawsuitRoutes(app): void {
   router.route('/lawsuitinfo/:id').delete(lawsuitInfoCtrl.delete);
   // router.route('/lawsuitinfo/:limit/:page').get(lawsuitInfoCtrl.getLimit);
   router.route('/lawsuitinfo/:limit/:page').get(lawsuitInfoCtrl.getLimitByUser);
+  router.route('/lawsuitinfoList/count/all').get(lawsuitInfoCtrl.count)
+  router.route('/lawsuitinfoList/get/all').get(lawsuitInfoCtrl.getAllData)
+
 
   // lawsuitTable
   router.route('/lawsuittable').post(lawsuitTableCtrl.insert);
@@ -26,6 +29,9 @@ function LawsuitRoutes(app): void {
   router.route('/lawsuittable/:id').get(lawsuitTableCtrl.get);
   router.route('/lawsuittable/:id').put(lawsuitTableCtrl.update);
   router.route('/lawsuittable/:id').delete(lawsuitTableCtrl.delete);
+  router.route('/lawsuittableList/count').post(lawsuitTableCtrl.countLawsuit)
+  router.route('/lawsuittableList/count/all').get(lawsuitTableCtrl.count)
+  router.route('/lawsuittableList/report').get(lawsuitTableCtrl.getLawsuitList)
 
   // RequestTable
   router.route('/requesttable').post(requestTableCtrl.insert);
@@ -33,6 +39,9 @@ function LawsuitRoutes(app): void {
   router.route('/requesttable/:id').get(requestTableCtrl.get);
   router.route('/requesttable/:id').put(requestTableCtrl.update);
   router.route('/requesttable/:id').delete(requestTableCtrl.delete);
+  router.route('/requesttableList/count').post(requestTableCtrl.countRequest)
+  router.route('/requesttableList/count/all').get(requestTableCtrl.count)
+  router.route('/requesttableList/report').get(requestTableCtrl.getRequestList)
 
   // dataList
 

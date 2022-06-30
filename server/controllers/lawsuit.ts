@@ -65,16 +65,236 @@ export class LawsuitInfoCtrl extends BaseCtrl {
     }
   }
 
+  countWith = async (req, res) => {
+    try {
+        const count = await this.model.count();
+        res.status(200).json(count);
+     
+    } catch (err) {
+      return res.status(400).json({ error: err.message });
+    }
+  }
+
+  getAllData = async (req, res) => {
+    try {
+        const count = await this.model.find();
+        res.status(200).json(count);
+     
+    } catch (err) {
+      return res.status(400).json({ error: err.message });
+    }
+  }
+
 }
 
 export class LawsuitTableCtrl extends BaseCtrl {
   model: Model<Document> = LawsuitTable;
+  countLawsuit = (req:Request, res: Response)=>{
+   try {
+    this.model.aggregate([
+      {$lookup: {
+           from: 'lawsuitinfos',
+           localField: 'lawsuitFile',
+           foreignField: "_id",
+           as: "lawsuitFile"  
+      }},
+      {
+      $unwind: "$lawsuitFile"
+      },
+      {$match: {"lawsuitFile.court_name" : RegExp(req.body.value,'i')} }
+      ]).count('countNumber').exec((err,doc)=>{
+        if(err) res.status(400).json({ error: err.message });
+        res.status(200).json(doc);
+      })
+   } catch (error) {
+    return res.status(400).json({ error: error.message });
+   }
+  }
 
+  getLawsuitList = (req:Request, res: Response)=>{
+    try {
+     this.model.aggregate([
+      {$lookup: {
+           from: 'lawsuitinfos',
+           localField: 'lawsuitFile',
+           foreignField: "_id",
+           as: "lawsuitFile"  
+      }},
+      {
+      $unwind: "$lawsuitFile"
+      },
+      {
+      $facet :{
+          allData : [
+           {$group: 
+               {
+                   _id: 'all',
+                   feild: {$push: {
+                            "lawsuit_no" : "$lawsuitFile.l_no",
+                            "lawsuit_year" : "$lawsuitFile.l_year",
+                            "lawsuit_date" : "$lawsuitFile.l_date",
+                            "lawsuit_court" : "$lawsuitFile.court_name",
+                            "l_type" : "$lawsuitFile.l_type",
+                            "l_type_no" : "$lawsuitFile.l_type_no",
+                            "l_type_s" : "$lawsuitFile.l_type_s",
+                            "l_cost" : "$lawsuitFile.l_cost",
+                            "l_cost_type" : "$lawsuitFile.l_cost_type",
+                            "claimant_no" : "$lawsuitFile.claimant_no",
+                            "defendant_no" : "$lawsuitFile.defendant_no",
+                            "witness_no" : "$lawsuitFile.witness_no",
+                            "has_no_coast" : "$lawsuitFile.has_no_coast",
+                            "session_no" : "$session_no",
+                            "session_court" : "$court_name",
+                            "judge_name" : "$judge_name",
+                            "from_date" : "$from_date",
+                            "to_date" : "$to_date",
+                            "postponement_period" : "$postponement_period",
+                            "postponement_period_couse" : "$postponement_period_couse",
+                            "reason_details" : "$reason_details",
+                            "stage" : "$stage",
+                            "session_active" : "$session_active",
+                            "has_lawyer" : "$session_active",
+                     }}
+                       } 
+                   },
+              ],
+          solehData : [
+          {$match : {"lawsuitFile.court_name" : /صلح/}},
+           {$group: 
+               {
+                   _id: 'all',
+                   sum: {$sum: 1}
+                       }  
+                   },
+              ],
+         bedaiaData : [
+          {$match : {"lawsuitFile.court_name" : /بداية/}},
+           {$group: 
+               {
+                   _id: 'all',
+                   sum: {$sum: 1}
+                       } 
+                   },
+              ],
+        subdata: [
+            {$group: {_id:'$lawsuitFile.court_name' , sum : {$sum: 1} }}
+        ]
+      }
+      },
+      
+      ]).exec((err,doc)=>{
+
+         if(err) res.status(400).json({ error: err.message });
+         res.status(200).json(doc);
+       })
+    } catch (error) {
+     return res.status(400).json({ error: error.message });
+    }
+   }
 }
 
 export class RequestTableCtrl extends BaseCtrl {
   model: Model<Document> = RequestTable;
+  countRequest = (req:Request, res: Response)=>{
+    try {
+     this.model.aggregate([
+       {$lookup: {
+            from: 'lawsuitinfos',
+            localField: 'lawsuitFile',
+            foreignField: "_id",
+            as: "lawsuitFile"  
+       }},
+       {
+       $unwind: "$lawsuitFile"
+       },
+       {$match: {"lawsuitFile.court_name" : RegExp(req.body.value,'i')} }
+       ]).count('countNumber').exec((err,doc)=>{
+         if(err) res.status(400).json({ error: err.message });
+         res.status(200).json(doc);
+       })
+    } catch (error) {
+     return res.status(400).json({ error: error.message });
+    }
+   }
 
+   getRequestList = (req:Request, res: Response)=>{
+    try {
+     this.model.aggregate([
+      {$lookup: {
+           from: 'lawsuitinfos',
+           localField: 'lawsuitFile',
+           foreignField: "_id",
+           as: "lawsuitFile"  
+      }},
+      {
+      $unwind: "$lawsuitFile"
+      },
+      {
+      $facet :{
+          allData : [
+           {$group: 
+               {
+                   _id: 'all',
+                   feild: {$push: {
+                            "lawsuit_no" : "$lawsuitFile.l_no",
+                            "lawsuit_year" : "$lawsuitFile.l_year",
+                            "lawsuit_date" : "$lawsuitFile.l_date",
+                            "lawsuit_court" : "$lawsuitFile.court_name",
+                            "l_type" : "$lawsuitFile.l_type",
+                            "l_type_no" : "$lawsuitFile.l_type_no",
+                            "l_type_s" : "$lawsuitFile.l_type_s",
+                            "l_cost" : "$lawsuitFile.l_cost",
+                            "l_cost_type" : "$lawsuitFile.l_cost_type",
+                            "claimant_no" : "$lawsuitFile.claimant_no",
+                            "defendant_no" : "$lawsuitFile.defendant_no",
+                            "witness_no" : "$lawsuitFile.witness_no",
+                            "has_no_coast" : "$lawsuitFile.has_no_coast",
+                            "request_no" : "$request_no",
+                            "request_year" :"$request_year",
+                            "request_type" : "$request_type",
+                            "judge_name" : "$judge_name",
+                            "applicant_name" : "$applicant_name",
+                            "applicant_date" : "$applicant_date",
+                            "applicant_do_date" :"$applicant_do_date",
+                            "applicant_do_period" : "$applicant_do_period",
+                            "is_applicant" : "$is_applicant",
+                            "applicant_count" :"$applicant_count",
+                           }}
+                       } 
+                   },
+              ],
+          solehData : [
+          {$match : {"lawsuitFile.court_name" : /صلح/}},
+           {$group: 
+               {
+                   _id: 'all',
+                   sum: {$sum: 1}
+                       } 
+                   },
+              ],
+         bedaiaData : [
+          {$match : {"lawsuitFile.court_name" : /بداية/}},
+           {$group: 
+               {
+                   _id: 'all',
+                   sum: {$sum: 1}
+                       } 
+                   },
+              ],
+        subdata: [
+            {$group: {_id:'$lawsuitFile.court_name' , sum : {$sum: 1} }}
+        ]
+      }
+      },
+      
+      ]).exec((err,doc)=>{
+         if(err) res.status(400).json({ error: err.message });
+         res.status(200).json(doc);
+       })
+    } catch (error) {
+     return res.status(400).json({ error: error.message });
+    }
+   }
 }
 
 export class DataListCtrl extends BaseCtrl {

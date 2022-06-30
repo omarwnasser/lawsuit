@@ -41,6 +41,7 @@
     "express-session": "^1.17.2",
     "font-awesome": "^4.7.0",
     "jquery": "^3.6.0",
+    "json2xlsx-export": "^1.2.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.8",
     "morgan": "^1.10.0",

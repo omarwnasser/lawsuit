@@ -5,7 +5,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuardLogin } from './services/auth-guard-login.service';
 import { AuthGuardAdmin } from './services/auth-guard-admin.service';
 // Components
-import { AboutComponent } from './about/about.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
@@ -15,12 +14,14 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
 import { AddlawsuitComponent } from './home/addlawsuit/Addlawsuit.component';
 import { LawsutitTableComponent } from './home/lawsuittable/lawsuittable.component';
+import { ReportComponent } from './home/report/report.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, children : [
     {path: '' , component: LawsutitTableComponent},
     {path: 'addlawsuit' , component: AddlawsuitComponent},
     {path: 'addlawsuit/:id' , component: AddlawsuitComponent},
+    {path: 'report' , component: ReportComponent},
   ], canActivate : [
     AuthGuardLogin
   ] },

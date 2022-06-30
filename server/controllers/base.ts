@@ -58,6 +58,17 @@ abstract class BaseCtrl {
     }
   }
 
+  countWhere = async (req, res) => {
+    let obj = {};
+    obj[req.body.field] =  new RegExp(req.body.vlaue, 'i')
+    try {
+      const count = await this.model.count(obj);
+      res.status(200).json(count);
+    } catch (err) {
+      return res.status(400).json({ error: err.message });
+    }
+  }
+
   // Insert
   insert = async (req, res) => {
     try {

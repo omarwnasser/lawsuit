@@ -33,6 +33,10 @@ export class LawsuitService {
     return this.http.get('/api/lawsuitinfo/'+id);
   }
 
+  getLawsuitAll():Observable<any>{
+    return this.http.get('/api/lawsuitinfoList/get/all');
+  }
+
 }
 
 @Injectable()
@@ -64,6 +68,14 @@ export class LawsuitTableService {
     return this.http.delete('/api/lawsuittable/'+id);
   }
 
+  getSessionCount():Observable<any>{
+    return this.http.get('/api/lawsuittableList/count/all')
+  }
+
+  getSessionAll():Observable<any>{
+    return this.http.get('/api/lawsuittableList/report')
+  }
+
 }
 
 @Injectable()
@@ -93,6 +105,14 @@ export class RequestTableService {
 
   deleteRequestTable(id:String):Observable<any>{
     return this.http.delete('/api/requesttable/'+id);
+  }
+
+  getRequestCount():Observable<any>{
+    return this.http.get('/api/requesttableList/count/all')
+  }
+
+  getRequestAll():Observable<any>{
+    return this.http.get('/api/requesttableList/report')
   }
 
 }

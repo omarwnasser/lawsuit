@@ -1,0 +1,114 @@
+<div>
+    <app-loading [condition]="isLoading"></app-loading>
+</div>
+<div class="container my-4" dir="rtl" *ngIf="!isLoading">
+   <div class="row justify-content-around">
+        <div class="card">
+            <div class="m-auto">
+                <div class="text-center header">عدد الملفات الكلي</div>
+                <div class="text-center gray">{{lsCount}}</div> <!-- *** -->
+                <div class="text-center header">عدد الجلسات الكلي</div>
+                <div class="text-center gray">{{liCount}}</div> <!-- *** -->
+                <div class="text-center header">عدد الطلبات الكلي</div>
+                <div class="text-center gray">{{lrCount}}</div> <!-- *** -->
+            </div>
+        </div>
+        <div class="card">
+            <div class="m-auto">
+                <div class="text-center header"> عدد الجلسات الكلي </div>
+                <div class="text-center gray">{{liList[0] && liList[0].allData? liList[0].allData[0].feild.length : 0}}</div> <!-- *** -->
+                <div class="text-center header">عدد الجلسات للبداية</div>
+                <div class="text-center gray">{{liList[0] && liList[0].bedaiaData? liList[0].bedaiaData[0].sum : 0}}</div> <!-- *** -->
+                <div class="text-center header">عدد الجلسات للصلح</div>
+                <div class="text-center gray">{{liList[0] && liList[0].solehData? liList[0].solehData[0].sum : 0}}</div> <!-- *** -->
+            </div>
+        </div>
+        <div class="card">
+            <div class="m-auto">
+                <div class="text-center header"> عدد الطلبات الكلي </div>
+                <div class="text-center gray">{{lrList[0] && lrList[0].allData? lrList[0].allData[0].feild.length : 0}}</div> <!-- *** -->
+                <div class="text-center header">عدد الطلبات للبداية الكلي</div>
+                <div class="text-center gray">{{lrList[0] && lrList[0].bedaiaData? lrList[0].bedaiaData[0].sum : 0}}</div> <!-- *** -->
+                <div class="text-center header">عدد الطلبات للصلح الكلي</div>
+                <div class="text-center gray">{{lrList[0] && lrList[0].solehData? lrList[0].solehData[0].sum : 0}}</div> <!-- *** -->
+            </div>
+        </div>
+        <div class="card">
+            <div class="m-auto">
+                <div>
+                    <button class="btn btn-outline-primary" (click)="exportNewExcel()">تصدير ملف الاكسل</button>
+                </div>
+            </div>
+        </div>
+   </div>
+   <div class="text-right mb-5" dir="rtl">
+    <div class="mt-5">
+        <h2>جلسات</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>بداية شمال غزة</th>
+                    <th>بداية غزة</th>
+                    <th>بداية دير البلح</th>
+                    <th>بداية خانيونس</th>
+                    <th>بداية رفح</th>
+                    <th>صلح شمال غزة</th>
+                    <th>صلح غزة</th>
+                    <th>صلح دير البلح</th>
+                    <th>صلح خانيونس</th>
+                    <th> صلح رفح</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{liList[0] && liList[0].subdata? getAreaCount(liList[0].subdata, 'بداية شمال غزة'): 0}}</td>
+                    <td>{{liList[0] && liList[0].subdata? getAreaCount(liList[0].subdata, 'بداية غزة'): 0}}</td>
+                    <td>{{liList[0] && liList[0].subdata? getAreaCount(liList[0].subdata, 'بداية دير البلح'): 0}}</td>
+                    <td>{{liList[0] && liList[0].subdata? getAreaCount(liList[0].subdata, 'بداية خانيونس'): 0}}</td>
+                    <td>{{liList[0] && liList[0].subdata? getAreaCount(liList[0].subdata, 'بداية رفح'): 0}}</td>
+                    <td>{{liList[0] && liList[0].subdata? getAreaCount(liList[0].subdata, 'صلح شمال غزة'): 0}}</td>
+                    <td>{{liList[0] && liList[0].subdata? getAreaCount(liList[0].subdata, 'صلح غزة'): 0}}</td>
+                    <td>{{liList[0] && liList[0].subdata? getAreaCount(liList[0].subdata, 'صلح دير البلح'): 0}}</td>
+                    <td>{{liList[0] && liList[0].subdata? getAreaCount(liList[0].subdata, 'صلح خانيونس'): 0}}</td>
+                    <td>{{liList[0] && liList[0].subdata? getAreaCount(liList[0].subdata, 'صلح رفح'): 0}}</td>
+                </tr>
+            </tbody>
+        </table>
+       </div>
+       <div class="mt-2">
+        <h2>طلبات</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>بداية شمال غزة</th>
+                    <th>بداية غزة</th>
+                    <th>بداية دير البلح</th>
+                    <th>بداية خانيونس</th>
+                    <th>بداية رفح</th>
+                    <th>صلح شمال غزة</th>
+                    <th>صلح غزة</th>
+                    <th>صلح دير البلح</th>
+                    <th>صلح خانيونس</th>
+                    <th> صلح رفح</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{lrList[0] && lrList[0].subdata? getAreaCount(lrList[0].subdata, 'بداية شمال غزة'): 0}}</td>
+                    <td>{{lrList[0] && lrList[0].subdata? getAreaCount(lrList[0].subdata, 'بداية غزة'): 0}}</td>
+                    <td>{{lrList[0] && lrList[0].subdata? getAreaCount(lrList[0].subdata, 'بداية دير البلح'): 0}}</td>
+                    <td>{{lrList[0] && lrList[0].subdata? getAreaCount(lrList[0].subdata, 'بداية خانيونس'): 0}}</td>
+                    <td>{{lrList[0] && lrList[0].subdata? getAreaCount(lrList[0].subdata, 'بداية رفح'): 0}}</td>
+                    <td>{{lrList[0] && lrList[0].subdata? getAreaCount(lrList[0].subdata, 'صلح شمال غزة'): 0}}</td>
+                    <td>{{lrList[0] && lrList[0].subdata? getAreaCount(lrList[0].subdata, 'صلح غزة'): 0}}</td>
+                    <td>{{lrList[0] && lrList[0].subdata? getAreaCount(lrList[0].subdata, 'صلح دير البلح'): 0}}</td>
+                    <td>{{lrList[0] && lrList[0].subdata? getAreaCount(lrList[0].subdata, 'صلح خانيونس'): 0}}</td>
+                    <td>{{lrList[0] && lrList[0].subdata? getAreaCount(lrList[0].subdata, 'صلح رفح'): 0}}</td>
+                </tr>
+            </tbody>
+        </table>
+       </div>
+   </div>
+</div>

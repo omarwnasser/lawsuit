@@ -14,7 +14,8 @@
                     <a routerLink="/addlawsuit" class="nav-link" routerLinkActive="active">إضافة ملف</a>
                 </li>
                 <li class="nav-item">
-                  <a  class="nav-link">تقارير</a>
+                  <a  routerLink="/report" class="nav-link" routerLinkActive="active" *ngIf="user.role == 'admin'">تقارير</a>
+                  <a  class="nav-link"  *ngIf="user.role != 'admin'">تقارير</a>
               </li>
                 <!-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>

@@ -20,13 +20,15 @@ import { SharedModule } from "../shared/shared.module";
 import { AddlawsuitComponent } from "./addlawsuit/Addlawsuit.component";
 import { HomeComponent } from "./home.component";
 import { LawsutitTableComponent } from "./lawsuittable/lawsuittable.component";
+import { ReportComponent } from './report/report.component';
 
 
 @NgModule({
   declarations: [
     HomeComponent,
     LawsutitTableComponent,
-    AddlawsuitComponent
+    AddlawsuitComponent,
+    ReportComponent
   ],
   imports:[
     RouterModule,
