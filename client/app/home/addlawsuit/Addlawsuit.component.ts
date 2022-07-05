@@ -238,21 +238,25 @@ editLawsuit(){
 }
 
 updateLawsuit(){
-  this.isLoading = true;
-  if(this.has_no_coast){
-    this.l_cost.setValue(0)
+  if(this.lawsuitInfoForm.valid){
+    this.isLoading = true;
+    if(this.has_no_coast){
+      this.l_cost.setValue(0)
+    }
+    this.lawInfo.updateLawsuitInfo(this.editInfo, this.lawsuitInfoForm.value).subscribe(e=>{
+      this.lawsuitInfoData = e;
+      this.editInfo = '';
+      this.resetLawsuitInfo();
+      this.isLoading = false;
+    },err=> {
+      this.toast.setMessage(err, 'warning');
+      this.isLoading = false;
+    } , ()=>{
+      this.isLoading = false;
+    })
+  }else{
+    this.toast.setMessage('البيانات غير مكتملة','warning',3000)
   }
-  this.lawInfo.updateLawsuitInfo(this.editInfo, this.lawsuitInfoForm.value).subscribe(e=>{
-    this.lawsuitInfoData = e;
-    this.editInfo = '';
-    this.resetLawsuitInfo();
-    this.isLoading = false;
-  },err=> {
-    this.toast.setMessage(err, 'warning');
-    this.isLoading = false;
-  } , ()=>{
-    this.isLoading = false;
-  })
 }
 
 cancelEditLawsuit(){
@@ -307,12 +311,15 @@ editLawsuitTable(id:String){
 }
 
 editLawTable(){
+  if(this.lawsuitTableForm.valid)
   this.lawTable.updateLawsuitTable(this.editId,this.lawsuitTableForm.value).subscribe(e=>{
     let n = this.lawsuitTableList.findIndex(e=> e._id == this.editId);
     this.lawsuitTableList[n] = e;
     this.editId = '';
     this.resetLawsuitTable();
   })
+  else
+  this.toast.setMessage('البيانات غير مكتملة','warning',3000)
 }
 
 deleteLawsuitTable(id){
@@ -349,11 +356,14 @@ editReqTable(){
   if(this.is_applicant){
     this.applicant_do_date.setValue(formatDate(this.applicant_date.value , 'yyyy-MM-dd','en'));
   }
+  if(this.requestTableForm.valid)
   this.reqTable.updateRequestTable(this.editrId,this.requestTableForm.value).subscribe(e=>{
     this.RequestTableList[ this.RequestTableList.findIndex(e=> e._id == this.editrId)] = e;
     this.editrId = '';
     this.resetRequestTable();
   })
+  else
+  this.toast.setMessage('البيانات غير مكتملة','warning',3000)
 }
 
 deleteRequestTable(id){
