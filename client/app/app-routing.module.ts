@@ -15,6 +15,7 @@ import { HomeComponent } from './home/home.component';
 import { AddlawsuitComponent } from './home/addlawsuit/Addlawsuit.component';
 import { LawsutitTableComponent } from './home/lawsuittable/lawsuittable.component';
 import { ReportComponent } from './home/report/report.component';
+import { ReslutionComponent } from './reslution/reslution.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, children : [
@@ -27,6 +28,7 @@ const routes: Routes = [
   ] },
   { path: 'register', component: RegisterComponent, canActivate: [AuthGuardAdmin] },
   { path: 'login', component: LoginComponent },
+  { path: 'إستبيان',component: ReslutionComponent},
   { path: 'logout', component: LogoutComponent },
   { path: 'account', component: AccountComponent, canActivate: [AuthGuardAdmin] },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuardAdmin] },

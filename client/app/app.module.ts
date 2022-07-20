@@ -23,6 +23,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { HomeModule } from './home/home.module';
 import { RouterModule } from '@angular/router';
+import { ReslutionComponent } from './reslution/reslution.component';
+import { ResolutionService } from './services/resolution.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { RouterModule } from '@angular/router';
     LogoutComponent,
     AccountComponent,
     AdminComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ReslutionComponent
   ],
   imports: [
     MaterialModule,
@@ -53,6 +56,7 @@ import { RouterModule } from '@angular/router';
     AuthGuardLogin,
     AuthGuardAdmin,
     UserService,
+    ResolutionService,
     DataList
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

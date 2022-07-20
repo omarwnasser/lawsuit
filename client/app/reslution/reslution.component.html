@@ -1,0 +1,407 @@
+<div class="container py-4">
+    <div class="card">
+        <h1 class="text-right mt-5 mb-2 mx-2 text-center p-2" style="background-color: lightgreen;">إستبيان لتقيم شركة مرسال من طرف موظفي المحاكم</h1>
+        <h4 class="text-right mx-2 text-center">عزيزي متلقي الخدمة القضائية النظامية:
+            يسعى المجلس الأعلى للقضاء من خلال هذه الاستبانة للوقوف على مستوى الرضا عن الخدمات القضائية المقدمة من خلال شركة مرسال، وعليه نأمل من حضرتكم التعامل بإيجابية مع هذه الاستبانة؛ لتستطيع الاعتماد على نتائجها بشكل يرفع مستوى تقديم الخدمة، وتحسين بيئة العمل في المحاكم النظامية.
+            </h4>
+        <div class="container mt-4 w-75 m-auto">
+            <form [formGroup]="resolutionForm" class="text-right mx-2" (ngSubmit)="sendDataForm()">
+                <div class="form-group">
+                    <label for="employee_no">اسم الموظف</label>
+                    <input type="text" name="employee_no" [formControl]="employee_name" id="employee_no" class="form-control" placeholder="" aria-describedby="helpId">
+                </div>
+                <section class="mx-2">
+                    <div class="row">
+                        <p class="ml-4">جهة متلقي الخدمة</p>
+                        <mat-radio-group [align]="'start'" [formControl]="who_is">
+                            <mat-radio-button value="موظف أرشيف"> <pre> موظف أرشيف </pre> </mat-radio-button>
+                            <mat-radio-button value="رئيس قلم"> <pre> رئيس قلم </pre> </mat-radio-button>
+                            <mat-radio-button value="مأمور تنفيذ"> <pre> مأمور تنفيذ </pre> </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="row">
+                        <p class="ml-4">الجنس</p>
+                        <mat-radio-group [align]="'start'" [formControl]="gender">
+                            <mat-radio-button value="m"> <pre>  ذكر </pre> </mat-radio-button>
+                            <mat-radio-button value="f"> <pre>  أنثى </pre> </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="row">
+                        <p class="ml-4"> مكان العمل </p>
+                        <mat-radio-group [align]="'start'" [formControl]="work_place">
+                            <mat-radio-button value="مجمع محاكم غزة"> <pre> مجمع محاكم غزة </pre> </mat-radio-button>
+                            <mat-radio-button value="مجمع محاكم خانيونس"> <pre> مجمع محاكم خانيونس </pre> </mat-radio-button>
+                            <mat-radio-button value="مجمع محاكم الوسطى"> <pre> مجمع محاكم الوسطى </pre> </mat-radio-button>
+                            <mat-radio-button value="مجمع محاكم شمال غزة"> <pre> مجمع محاكم شمال غزة </pre> </mat-radio-button>
+                            <mat-radio-button value="مجمع محاكم رفح"> <pre> مجمع محاكم رفح </pre> </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </section>
+                <section>
+                    <fieldset>
+                        <legend>الجودة الادارية</legend>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 ">يتميز موظفو شركة مرسال بالمعرفة والخبرة الكافية في إجراءات التبليغ القانونية</label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="jawda_e_a">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 ">يتميز موظفو شركة مرسال بزي لائق ومناسب لطبيعة العمل</label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="jawda_e_b">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 ">تتميز شركة مرسال بالتأكد من وصول الإعلانات وعدم ضياعها</label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="jawda_e_c">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 ">يتمتع موظفو شركة مرسال بمتعاملين لدى المحاكم بشخصية تتناسب مع وظيفة عملهم</label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="jawda_e_d">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 ">يتميز موظفو شركة مرسال بتدقيق الإعلان قبل 72ساعة من موعد الإعلان</label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="jawda_e_e">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 ">يتميز موظفو شركة مرسال بالنزاهة والشفافية اللازمة</label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="jawda_e_f">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </fieldset>
+                </section>
+                <section>
+                    <fieldset>
+                        <legend>الجودة الفنية / الإعلانات المنجزة</legend>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> مدى سرعة تسليم الإعلانات </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="monjza_a">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> مدى تسليم الإعلانات بوقت كافٍ قبل موعد الجلسة </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="monjza_b">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> مدى اعتماد مرسال للإعلان على أنه إعلان منجز مطابقة للواقع </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="monjza_c">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> مدى سرعة أرشفة الإعلانات من قبل شركة مرسال على الحاسوب  </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="monjza_d">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> مدى الالتزام بتسليم الإعلان للشخص نفسه المراد إعلانه </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="monjza_e">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </fieldset>
+                    <fieldset>
+                        <legend>الجودة الفنية / الإعلانات المرجعة</legend>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> المشروحات واضحة على الإعلانات ويمكن الاعتماد عليها </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="morjaa_a">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> عند إعادة الإعلان المرجع سابقاً يقوم المبلغ ببذل المجهود اللازم للوصول الى الإعلان الصحيح </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="morjaa_b">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> التأكد من العنوان ومحاولة الوصول للعنوان المذكور في الإعلان بجدية </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="morjaa_c">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </fieldset>
+                    <fieldset>
+                        <legend>الجودة الفنية / الإعلانات العاجلة والإعلانات المعفاة والإعلانات خارج قطاع غزة </legend>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> مدى سرعة تسليم الإعلانات العاجلة قبل موعد الجلسة </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="aajela_a">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> مدى الالتزام بتسليم الإعلانات المعفاة </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="aajela_b">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> مدى التعامل مع الإعلانات الصادرة خارج قطاع غزة </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="aajela_c">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </fieldset>
+                    <fieldset>
+                        <legend>الجودة الفنية / الجودة المالية </legend>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> مدى تحصيل أتعاب مرسال للإعلانات والمخاطبات بأسعار معقولة  </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="malia_a">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> مدى إنجاز الإعلان على نفس العنوان عدة مرات بنفس الرسم الأول </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="malia_b">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> مدى إنجاز إعادة الإعلان لغير المبلغ سابقاً بنفس الرسم الأول </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="malia_c">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> مدى إنجاز الإعلانات المعفاة بدون تحصيل رسوم  </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="malia_d">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> مدى إعادة إنجاز الإعلانات المفقودة بدون تحصيل رسوم للمرة الثانية </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="malia_e">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </fieldset>
+                    <fieldset>
+                        <legend>الجودة الفنية / سهولة الوصول </legend>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> مدى سهولة الوصول لموظفي ومقرات شركة مرسال </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="ease_a">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> مدى توفير وسائل تواصل مع موظفي شركة مرسال  </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="ease_b">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> مدى قدرة شركة مرسال على معالجة إشكاليات الإعلانات </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="ease_c">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </fieldset>
+                    <fieldset>
+                        <legend>الجودة الفنية /  رضا متلقي الخدمة </legend>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> درجة الرضا عن جودة أداء الخدمات المقدمة من خلال شركة مرسال </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="accepted_a">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> درجة الرضا عن سرعة وصول الإعلانات لدى شركة مرسال </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="accepted_b">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> درجة الرضا عن الدقة في الخدمات المقدمة من قبل شركة مرسال </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="accepted_c">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> درجة الرضا عن أسعار خدمات شركة مرسال  </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="accepted_d">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> درجة الرضا عن نظام متابعه الإعلانات لدى شركة مرسال </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="accepted_e">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="background-color: rgb(242, 255, 242);">
+                            <label for="1" class="mx-2 p-2 "> درجة الرضا عن نظام معالجة إشكاليات الإعلانات والمعمول به في شركة مرسال </label>
+                            <div class="w-100">
+                                <input type="range" value="1" max="10" min="1" class="w-100" [formControl]="accepted_f">
+                                <div class="row justify-content-between px-3">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </fieldset>
+                </section>
+                <section class="my-4">
+                    <fieldset>
+                        <legend>الرجاء الإجابة بنعم أولا:</legend>
+                        <div class="row">
+                            <p class="ml-4">توفر شركة مرسال لبرنامج يساعد المحاكم على المراجعة : </p>
+                            <mat-radio-group [align]="'start'" [formControl]="yes_no_a">
+                                <mat-radio-button value="yes"> <pre> نعم </pre> </mat-radio-button>
+                                <mat-radio-button value="no"> <pre> لا </pre> </mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <div class="row">
+                            <p class="ml-4">توفر شركة مرسال لتطبيق جوال لتتبع الإعلانات:  </p>
+                            <mat-radio-group [align]="'start'" [formControl]="yes_no_b">
+                                <mat-radio-button value="yes"> <pre>  نعم </pre> </mat-radio-button>
+                                <mat-radio-button value="no"> <pre>  لا </pre> </mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <div>
+                            <h4>في حال لديك اقتراحات، يرجى ذكرها </h4>
+                            <textarea name="" id="" cols="30" rows="5" class="w-100 form-control" placeholder="أكتب إقتراحك هنا ....." [formControl]="suggestion"></textarea>
+                        </div>
+                    </fieldset>
+                </section>
+
+                <div class="my-3 row mx-4">
+                    <button type="submit" class="btn btn-primary mx-2">حفظ البيانات</button>
+                    <a href="" class="btn btn-warning">إلغاء الأمر</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<app-toast  [message]="toast.message"></app-toast>
